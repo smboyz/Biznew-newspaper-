@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>BizNews</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="Free HTML Templates" name="keywords" />
+    <meta content="Free HTML Templates" name="description" />
+    <!-- Favicon -->
+    <link href="{% static "news_admin/img/BN.png" %}" rel="icon" />
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="{% static 'css2.css' %}" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="{% static 'all.min.css' %}" rel="stylesheet" />
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}"
+          rel="stylesheet"/>
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    {% include "biznew/header/header.html" %}
+    {% block content %}
+    {% endblock content %}
+    {% include "biznew/footer/footer.html" %}
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary btn-square back-to-top"><i class="fa fa-arrow-up"></i
+    ></a>
+    <!-- JavaScript Libraries -->
+    <script src="{% static 'jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'all.min.js' %}"></script>
+    <script>
+      $("#news_letter_side_form").submit(function(e){
+          e.preventDefault();//do not reload the browser
+          let serializedData = $(this).serialize();
+          $.ajax({
+              type: "POST",
+              data: serializedData,
+              url: "{% url 'newsletter' %}",
+              success: function(response){
+                  $("#newsletter_letter_message").append(
+                  `
+                  
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      <strong>${response.message}</strong>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  `
+                  )
+              },
+              error: function(response){
+                  $("#newsletter_letter_message").append(
+                  `
+                  
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <strong>${response.message}</strong> 
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  `
+                  )
+              }
+          })
+      })
+      $("#news_letter_middle_form").submit(function(e){
+        e.preventDefault();//do not reload the browser
+        let serializedData = $(this).serialize();
+        $.ajax({
+            type: "POST",
+            data: serializedData,
+            url: "{% url 'newsletter' %}",
+            success: function(response){
+                $("#newsletter_letter_middle_message").append(
+                `
+                
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>${response.message}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                `
+                )
+            },
+            error: function(response){
+                $("#newsletter_letter_middle_message").append(
+                `
+                
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>${response.message}</strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                `
+                )
+            }
+        })
+    })
+    </script>
+  </body>
+</html>

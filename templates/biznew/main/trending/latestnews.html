@@ -1,0 +1,74 @@
+{% load static %}
+<div class="col-lg-8">
+  <div class="row">
+    <div class="col-12">
+      <div class="section-title">
+        <h4 class="m-0 text-uppercase font-weight-bold">Latest News</h4>
+        <a class="text-secondary font-weight-medium text-decoration-none"
+           href="{% url 'post-list' %}">View All</a
+          >
+        </div>
+      </div>
+      {% for latest_post in latest_posts %}
+        <div class="col-lg-6">
+          <div class="position-relative mb-3">
+            <img class="img-fluid w-100"
+                 src="{{ latest_post.featured_image.url }}"
+                 alt="{{ latest_post.title }}"
+                 width="50px"
+                 style="object-fit: cover"/>
+            <div class="bg-white border border-top-0 p-4">
+              <div class="mb-2">
+                <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                   href="">{{ latest_post.category.name }}</a
+                  >
+                  <a class="text-body" href=""><small>{{ latest_post.published_at }}</small></a
+                    >
+                  </div>
+                  <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold"
+                     href="{% url 'post-detail' latest_post.pk %}">{{ latest_post.title }}</a
+                    >
+                  </div>
+                  <div class="d-flex justify-content-between bg-white border border-top-0 p-4">
+                    <div class="d-flex align-items-center">
+                      <img class="rounded-circle mr-2"
+                           src="{% static "img/login.jpg" %}"
+                           width="25"
+                           height="25"
+                           alt=""/>
+                      <span>{{ latest_post.author.username }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+            <div class="col-lg-12 mb-3">
+              <a href="">
+                <img class="img-fluid w-100"
+                     src="{% static 'img/ads-728x90.png' %}"
+                     alt=""/>
+              </a>
+            </div>
+            {% for post in posts %}
+              <div class="col-lg-6">
+                <div class="d-flex align-items-center bg-white mb-3" style="height: 110px">
+                  <img class="img-fluid"
+                       src="{{ post.featured_image.url }}"
+                       alt="{{ post.title }}"
+                       width="100px"/>
+                  <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
+                    <div class="mb-2">
+                      <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2"
+                         href="">{{ post.category.name }}</a
+                        >
+                        <a class="text-body" href=""><small>{{ post.published_at }}</small></a>
+                      </div>
+                      <a class="h6 m-0 text-secondary text-uppercase font-weight-bold"
+                         href="{% url 'post-detail' post.pk %}">{{ post.title }}</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>

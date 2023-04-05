@@ -1,0 +1,167 @@
+{% load static %}
+<!-- Topbar Start -->
+<div class="container-fluid d-none d-lg-block">
+  <div class="row align-items-center bg-dark px-lg-5">
+    <div class="col-lg-9">
+      <nav class="navbar navbar-expand-sm bg-dark p-0">
+        <ul class="navbar-nav ml-n2">
+          <li class="nav-item border-right border-secondary">
+            <a class="nav-link text-body small" href="#">Monday, January 1, 2045</a
+              >
+            </li>
+            <li class="nav-item border-right border-secondary">
+              <a class="nav-link text-body small" href="{% url 'contact' %}">Contact</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-lg-3 text-right d-none d-md-block">
+        <nav class="navbar navbar-expand-sm bg-dark p-0">
+          <ul class="navbar-nav ml-auto mr-n2">
+            <li class="nav-item">
+              <a class="nav-link text-body" href="#"><small class="fab fa-twitter-square"></small
+              ></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-body" href="#"><small class="fab fa-facebook-f"></small
+              ></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-body" href="#"><small class="fab fa-linkedin-in"></small
+              ></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-body" href="#"><small class="fab fa-instagram"></small
+              ></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-body" href="#"><small class="fab fa-google-plus-g"></small
+              ></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-body" href="#"><small class="fab fa-youtube"></small
+              ></a>
+            </li>
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link text-body"
+                   href="{% url 'post-download' %}"
+                   title="Download"><small class="fa-solid fa-download"></small
+                ></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-body"
+                   href="{% url 'category-list' %}"
+                   title="Category"><small class="fa-solid fa-sun"></small
+                ></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-body" href="{% url 'tag-list' %}" title="Tags"><small class="fa-solid fa-tag"></small
+                ></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-body" href="{% url 'post-create' %}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-body small"
+                   href="{% url 'logout' %}"
+                   title="Logout"><i class="fa-solid fa-house-user"></i></a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link text-body small"
+                   href="{% url 'login' %}"
+                   title="Login"><i class="fa-solid fa-house"></i></a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="row align-items-center bg-white py-3 px-lg-5">
+      <div class="col-lg-4">
+        <a href="/" class="navbar-brand p-0 d-none d-lg-block">
+          <h1 class="m-0 display-4 text-uppercase text-primary">
+            Biz<span class="text-secondary font-weight-normal">News</span>
+          </h1>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- Topbar End -->
+  <!-- Navbar Start -->
+  <div class="container-fluid p-0">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-2 py-lg-0 px-lg-5">
+      <a href="index.html" class="navbar-brand d-block d-lg-none">
+        <h1 class="m-0 display-4 text-uppercase text-primary">
+          Biz<span class="text-white font-weight-normal">News</span>
+        </h1>
+      </a>
+      <button type="button"
+              class="navbar-toggler"
+              data-toggle="collapse"
+              data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between px-0 px-lg-3"
+           id="navbarCollapse">
+        <div class="navbar-nav mr-auto py-0">
+          <a href="/" class="nav-item nav-link active">Home</a>
+          {% for category in top_categories %}
+            <a href="{% url 'post-by-category' category.pk %}"
+               class="nav-item nav-link">{{ category.name|title }}</a>
+          {% endfor %}
+          <a href="{% url 'post-list' %}" class="nav-item nav-link">Latest News</a>
+          <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+          <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tags</a>
+            <div class="dropdown-menu rounded-0 m-0">
+              {% for tag in tags %}
+                <a href="{% url 'post-by-tag' tag.pk %}" class="dropdown-item">{{ tag.name|title }}</a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <form action="{% url 'post-search' %}" method="get">
+        <div class="input-group ml-auto d-none d-lg-flex"
+             style="width: 100%;
+                    max-width: 300px">
+          <input type="text"
+                 class="form-control border-0"
+                 placeholder="Keyword"
+                 name="query"/>
+          <div class="input-group-append">
+            <button class="input-group-text bg-primary text-dark border-0 px-3">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+</div>
+<!-- Navbar End -->
+<!-- Breaking News Start -->
+<div class="container-fluid bg-dark py-3 mb-3">
+  <div class="container">
+    <div class="row align-items-center bg-dark">
+      <div class="col-12">
+        <div class="d-flex justify-content-between">
+          <div class="bg-primary text-dark text-center font-weight-medium py-2"
+               style="width: 170px">Breaking News</div>
+          <div class="owl-carousel tranding-carousel position-relative d-inline-flex align-items-center ml-3"
+               style="width: calc(100% - 170px);
+                      padding-right: 90px">
+            {% for featured_post in posts %}
+              <div class="text-truncate">
+                <a class="text-white text-uppercase font-weight-semi-bold" href="">{{ featured_post.title }}</a>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Breaking News End -->

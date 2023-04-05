@@ -1,0 +1,30 @@
+{% extends "news_admin/base.html" %}
+{% block content %}
+  <div class="col-11">
+    {% for post in posts %}
+      <div class="post">
+        {% if post.published_at %}<div class="date">{{ post.published_at }}</div>{% endif %}
+        <h1>
+          <a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a>
+        </h1>
+        {% for tag in tags %}
+          <div class="tag">
+            {% if tag.created_at %}<div class="date">{{ tag.created_at }}</div>{% endif %}
+            <h1>
+              <a href="{% url 'tag-detail' tag.pk %}">{{ tag.name }}</a>
+            </h1>
+          </div>
+        {% endfor %}
+        <div style="padding: 1rem;">
+          {% if post.featured_image %}
+            <img src="{{ post.featured_image.url }}"
+                 alt="{{ post.title }}"
+                 height="50px"
+                 class="img-fluid img-responsive img-thumbnail">
+          {% endif %}
+        </div>
+        <p align="justify">{{ post.content | striptags | truncatechars:200 }}</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock content %}

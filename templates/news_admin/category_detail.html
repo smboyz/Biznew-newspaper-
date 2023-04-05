@@ -1,0 +1,18 @@
+{% extends "news_admin/base.html" %}
+{% block content %}
+    <div class="post my-4">
+        <div class="mb-4">
+            <h1>
+                <a href="{% url 'category-detail' category.pk %}">{{ category.name }}</a>
+            </h1>
+            <a href="{% url 'category-update' category.pk %}"
+               class="btn btn-primary">
+                <span class="material-symbols-outlined">edit</span>
+            </a>
+            <a href="{% url 'category-delete' category.pk %}" class="btn btn-danger">
+                <span class="material-symbols-outlined">delete</span>
+            </a>
+        </div>
+        <p align="justify">{{ category.name }}</p>
+    </div>
+{% endblock content %}
